@@ -1,28 +1,22 @@
 # Sistema de Gestión Académica
 
-Este sistema permite gestionar las calificaciones de estudiantes a través de una interfaz de consola.
+Este sistema permite gestionar las calificaciones de estudiantes utilizando Programación Orientada a Objetos en Python.
 
-## Características
+## Funcionalidades
 
-- Registro de estudiantes con notas
-- Visualización de lista de estudiantes
-- Edición de notas
-- Eliminación de estudiantes
-- Estadísticas básicas
-- Persistencia en archivo CSV
-
-## Requisitos
-
-- Python 3.7+
-
-## Instalación
-
-1. Clonar el repositorio
-2. No se requieren dependencias adicionales
+- Registrar estudiantes con nombre y nota
+- Visualizar, editar y eliminar estudiantes
+- Ordenar estudiantes por nombre o nota
+- Buscar estudiantes por nombre
+- Mostrar estadísticas y distribución de notas
+- Clasificar estudiantes como aprobados o reprobados
 
 ## Uso
 
-Ejecutar el archivo main.py:
+1. Ejecute el archivo `main.py`
+2. Siga las instrucciones en el menú para utilizar las diferentes funcionalidades
+3. Los datos se guardan automáticamente en `estudiantes.csv`
 
-```bash
-python main.py
+## Requisitos
+
+- Python 3.7 o superior

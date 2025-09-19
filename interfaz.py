@@ -28,11 +28,10 @@ class InterfazConsola:
             estudiante = self.gestor.agregar_estudiante(nombre, nota)
             print(f"\nEstudiante registrado exitosamente:")
             print(estudiante)
-            input("\nPresione Enter para continuar...")
             
         except ValueError:
             print("Error: La nota debe ser un número válido")
-            input("\nPresione Enter para continuar...")
+        input("\nPresione Enter para continuar...")
     
     def mostrar_estudiantes(self):
         if not self.gestor.estudiantes:
@@ -43,10 +42,35 @@ class InterfazConsola:
                 print(estudiante)
         input("\nPresione Enter para continuar...")
     
+    def mostrar_estudiantes_ordenados(self):
+        print("\n1. Ordenar por nombre")
+        print("2. Ordenar por nota")
+        opcion = input("Seleccione criterio de ordenamiento: ")
+        
+        criterio = 'nombre' if opcion == '1' else 'nota'
+        estudiantes = self.gestor.obtener_estudiantes_ordenados(criterio)
+        
+        print("\nLista de estudiantes ordenada:")
+        for estudiante in estudiantes:
+            print(estudiante)
+        input("\nPresione Enter para continuar...")
+
+    def buscar_estudiantes(self):
+        nombre = input("\nIngrese nombre o inicial a buscar: ")
+        estudiantes = self.gestor.buscar_por_nombre(nombre)
+        
+        if estudiantes:
+            print("\nEstudiantes encontrados:")
+            for estudiante in estudiantes:
+                print(estudiante)
+        else:
+            print("\nNo se encontraron estudiantes")
+        input("\nPresione Enter para continuar...")
+    
     def editar_nota(self):
         try:
             id = int(input("\nIngrese el ID del estudiante: "))
-            nueva_nota = float(input("Ingrese la nueva nota (0-100): "))
+            nueva_nota = float(input("Ingrese la nueva nota: "))
             
             if self.gestor.editar_nota(id, nueva_nota):
                 print("Nota actualizada exitosamente")
@@ -76,6 +100,22 @@ class InterfazConsola:
         print(f"Nota mínima: {stats['min']}")
         input("\nPresione Enter para continuar...")
     
+    def mostrar_clasificacion(self):
+        try:
+            umbral = float(input("\nIngrese nota mínima de aprobación (0-100): "))
+            clasificacion = self.gestor.clasificar_estudiantes(umbral)
+            
+            print("\nEstudiantes Aprobados:")
+            for estudiante in clasificacion['aprobados']:
+                print(estudiante)
+            
+            print("\nEstudiantes Reprobados:")
+            for estudiante in clasificacion['reprobados']:
+                print(estudiante)
+        except ValueError:
+            print("Error: Ingrese un valor numérico válido")
+        input("\nPresione Enter para continuar...")
+    
     def mostrar_distribucion(self):
         dist = self.gestor.obtener_distribucion()
         print("\nDistribución de notas:")
@@ -87,12 +127,15 @@ class InterfazConsola:
         print("\n=== Sistema de Gestión Académica ===")
         print("1. Registrar estudiante")
         print("2. Ver estudiantes")
-        print("3. Editar nota")
-        print("4. Eliminar estudiante")
-        print("5. Ver estadísticas")
-        print("6. Ver distribución")
+        print("3. Ver estudiantes ordenados")
+        print("4. Buscar estudiantes")
+        print("5. Editar nota")
+        print("6. Eliminar estudiante")
+        print("7. Ver estadísticas")
+        print("8. Ver clasificación")
+        print("9. Ver distribución")
         print("0. Salir")
-        
+    
     def ejecutar(self):
         while True:
             self.mostrar_menu()
@@ -103,12 +146,18 @@ class InterfazConsola:
             elif opcion == "2":
                 self.mostrar_estudiantes()
             elif opcion == "3":
-                self.editar_nota()
+                self.mostrar_estudiantes_ordenados()
             elif opcion == "4":
-                self.eliminar_estudiante()
+                self.buscar_estudiantes()
             elif opcion == "5":
-                self.mostrar_estadisticas()
+                self.editar_nota()
             elif opcion == "6":
+                self.eliminar_estudiante()
+            elif opcion == "7":
+                self.mostrar_estadisticas()
+            elif opcion == "8":
+                self.mostrar_clasificacion()
+            elif opcion == "9":
                 self.mostrar_distribucion()
             elif opcion == "0":
                 self.repositorio.guardar_estudiantes(self.gestor.estudiantes)
